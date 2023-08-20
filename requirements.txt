@@ -4,3 +4,4 @@ sqlparse
 typing_extensions
 psycopg2-binary
 pillow
+ipython
