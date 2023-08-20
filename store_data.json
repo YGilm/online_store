@@ -1,0 +1,104 @@
+[
+{
+  "model": "catalog.category",
+  "pk": 4,
+  "fields": {
+    "category_name": "Детская литература",
+    "description": "Книги для детей, включая сказки, рассказы"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 5,
+  "fields": {
+    "category_name": "Научно-популярная литература",
+    "description": "Книги, объясняющие сложные научные темы в доступной форме"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 6,
+  "fields": {
+    "category_name": "Художественная литература",
+    "description": "Шедевры мировой литературы, влияющие на наследие"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 2,
+  "fields": {
+    "product_name": "Космос как предчувствие",
+    "description": "Книга Стивена Хокинга об астрофизике",
+    "product_image": "",
+    "category": 5,
+    "purchase_price": "850.50",
+    "creation_date": "2023-08-20",
+    "last_modified_date": "2023-08-20"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 3,
+  "fields": {
+    "product_name": "Сила привычки",
+    "description": "Как привычки влияют на нашу жизнь",
+    "product_image": "",
+    "category": 5,
+    "purchase_price": "250.00",
+    "creation_date": "2023-08-20",
+    "last_modified_date": "2023-08-20"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 4,
+  "fields": {
+    "product_name": "Война и мир",
+    "description": "Классический роман Льва Толстого",
+    "product_image": "",
+    "category": 6,
+    "purchase_price": "1130.00",
+    "creation_date": "2023-08-20",
+    "last_modified_date": "2023-08-20"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 5,
+  "fields": {
+    "product_name": "Преступление и наказание",
+    "description": "Знаменитый роман Ф.М. Достоевского",
+    "product_image": "",
+    "category": 6,
+    "purchase_price": "479.50",
+    "creation_date": "2023-08-20",
+    "last_modified_date": "2023-08-20"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 6,
+  "fields": {
+    "product_name": "Гарри Поттер и Философский камень",
+    "description": "Первая книга о приключениях Гарри Поттера, автора Джоан Роулинг",
+    "product_image": "",
+    "category": 4,
+    "purchase_price": "500.00",
+    "creation_date": "2023-08-20",
+    "last_modified_date": "2023-08-20"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 7,
+  "fields": {
+    "product_name": "Алиса в стране чудес",
+    "description": "Сказка Льюиса Кэрролла",
+    "product_image": "",
+    "category": 4,
+    "purchase_price": "330.00",
+    "creation_date": "2023-08-20",
+    "last_modified_date": "2023-08-20"
+  }
+}
+]
