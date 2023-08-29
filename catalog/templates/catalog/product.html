@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            {% for object in object_list %}
+            <div class="col-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ object.product_name | capfirst }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">{{ object.purchase_price | floatformat:2 }} руб.</h1>
+                        <ul class="list-unstyled mt-3 mb-4 text-center m-3" style="height: 100px;">
+                            <li>- {{ object.description|slice:":100" }}</li>
+                        </ul>
+                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
