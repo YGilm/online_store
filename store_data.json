@@ -29,7 +29,7 @@
   "fields": {
     "product_name": "Космос как предчувствие",
     "description": "Книга Стивена Хокинга об астрофизике",
-    "product_image": "",
+    "product_image": "products/not_image.jpg",
     "category": 5,
     "purchase_price": "850.50",
     "creation_date": "2023-08-20",
@@ -42,7 +42,7 @@
   "fields": {
     "product_name": "Сила привычки",
     "description": "Как привычки влияют на нашу жизнь",
-    "product_image": "",
+    "product_image": "products/sila-privychki.jpg",
     "category": 5,
     "purchase_price": "250.00",
     "creation_date": "2023-08-20",
@@ -55,7 +55,7 @@
   "fields": {
     "product_name": "Война и мир",
     "description": "Классический роман Льва Толстого",
-    "product_image": "",
+    "product_image": "products/voina_i_mir.jpg",
     "category": 6,
     "purchase_price": "1130.00",
     "creation_date": "2023-08-20",
@@ -68,7 +68,7 @@
   "fields": {
     "product_name": "Преступление и наказание",
     "description": "Знаменитый роман Ф.М. Достоевского",
-    "product_image": "",
+    "product_image": "products/prestuplenie.jpg",
     "category": 6,
     "purchase_price": "479.50",
     "creation_date": "2023-08-20",
@@ -81,7 +81,7 @@
   "fields": {
     "product_name": "Гарри Поттер и Философский камень",
     "description": "Первая книга о приключениях Гарри Поттера, автора Джоан Роулинг",
-    "product_image": "",
+    "product_image": "products/filosofskyi_kamen.jpg",
     "category": 4,
     "purchase_price": "500.00",
     "creation_date": "2023-08-20",
@@ -94,7 +94,7 @@
   "fields": {
     "product_name": "Алиса в стране чудес",
     "description": "Сказка Льюиса Кэрролла",
-    "product_image": "",
+    "product_image": "products/alisa_v_strane.jpg",
     "category": 4,
     "purchase_price": "330.00",
     "creation_date": "2023-08-20",
