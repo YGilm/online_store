@@ -29,7 +29,7 @@
                 </h2>
                 <hr>
                 <div class="card-body">
-                    <p class="card-text">{{ object.description }}</p>
+                    <p class="card-text">{{ object.description|truncatechars:100 }}</p>
 
                     <button type="button" class="w-100 btn btn-lg btn-success">Купить</button>
                 </div>

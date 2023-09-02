@@ -12,7 +12,7 @@
                     </div>
                     <div class="card-body d-flex flex-column">
                         <ul class="list-unstyled mt-3 mb-4 text-start m-3 flex-grow-1">
-                            <li>{{ object.description }}</li>
+                            <li>{{ object.description|truncatechars:100 }}</li>
                         </ul>
                     </div>
                 </div>
