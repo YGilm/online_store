@@ -6,9 +6,15 @@ register = template.Library()
 
 @register.filter
 def mediapath(path):
-    return f"{settings.MEDIA_URL}{path}"
+    if path:
+        return f"{settings.MEDIA_URL}{path}"
+    else:
+        return f"{settings.MEDIA_URL}not_image"
 
 
-@register.simple_tag
-def mediapath_tag(path):
-    return f"{settings.MEDIA_URL}{path}"
+# @register.simple_tag
+# def mediapath_tag(path):
+#     if path:
+#         return f"{settings.MEDIA_URL}{path}"
+#     else:
+#         return f"{settings.MEDIA_URL}not_image.png"

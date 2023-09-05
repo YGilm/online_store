@@ -1,30 +1,51 @@
-from django.shortcuts import render, get_object_or_404
-from catalog.models import *
+from django.shortcuts import render
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Category, Product, BlogPost
+
+DEFAULT_IMAGE_PATH = ''
+
+class HomeListView(ListView):
+    template_name = 'catalog/home.html'
+    context_object_name = 'object_list'
+
+    def get_queryset(self):
+        categories = Category.objects.all()
+        top_products = []
+
+        for category in categories:
+            top_product = Product.objects.filter(category=category).order_by('-creation_date').first()
+            if top_product:
+                top_products.append(top_product)
+
+        return top_products[:3]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'home page'
+        return context
 
 
-def home(request):
-    categories = Category.objects.all()
-    top_products = []
+class ProductListView(ListView):
+    model = Product
+    template_name = 'catalog/product.html'
+    context_object_name = 'object_list'
 
-    for category in categories:
-        top_product = Product.objects.filter(category=category).order_by('-creation_date').first()
-        if top_product:
-            top_products.append(top_product)
-
-    context = {
-        'object_list': top_products[:3],  # Отправляем только первые три топовых продукта
-        'title': 'home page'
-    }
-    return render(request, 'catalog/home.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'catalog'
+        return context
 
 
-def product(request):
-    product_list = Product.objects.all()
-    context = {
-        'object_list': product_list,
-        'title': 'catalog'
-    }
-    return render(request, 'catalog/product.html', context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
+    context_object_name = 'object'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.object.product_name
+        return context
 
 
 def contacts(request):
@@ -36,14 +57,57 @@ def contacts(request):
 
     context = {
         'title': 'contacts'
-        }
+    }
     return render(request, 'catalog/contacts.html', context)
 
 
-def product_detail(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    context = {
-        'object': product,
-        'title': product.product_name
-    }
-    return render(request, 'catalog/product_detail.html', context)
+class BlogPostListView(ListView):
+    model = BlogPost
+    template_name = 'catalog/blogpost_list.html'
+    context_object_name = 'blogs'
+
+
+class BlogPostDetailView(DetailView):
+    model = BlogPost
+    template_name = 'catalog/blogpost_detail.html'
+    context_object_name = 'object'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+
+        self.object.views_count += 1
+        self.object.save()
+
+        return self.object
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.object.title
+        return context
+
+
+class BlogPostCreateView(CreateView):
+    model = BlogPost
+    fields = ('title', 'content', 'is_published', 'views_count', 'image')
+    success_url = reverse_lazy('catalog:blogs')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        if not self.object.image:
+            self.object.image = 'media/note_image.jpg'
+            self.object.save()
+        return response
+
+
+class BlogPostUpdateView(UpdateView):
+    model = BlogPost
+    fields = ('title', 'content', 'is_published', 'views_count', 'image')
+    success_url = reverse_lazy('catalog:blogs')
+
+    def get_success_url(self):
+        return reverse('catalog:blogpost_detail', kwargs={'pk': self.object.pk})
+
+
+class BlogPostDeleteView(DeleteView):
+    model = BlogPost
+    success_url = reverse_lazy('catalog:blogs')
