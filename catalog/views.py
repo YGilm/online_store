@@ -3,7 +3,6 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Category, Product, BlogPost
 
-DEFAULT_IMAGE_PATH = ''
 
 class HomeListView(ListView):
     template_name = 'catalog/home.html'
@@ -65,6 +64,12 @@ class BlogPostListView(ListView):
     model = BlogPost
     template_name = 'catalog/blogpost_list.html'
     context_object_name = 'blogs'
+
+    def get_queryset(self, *args, **kwargs):
+        query = super().get_queryset(*args, **kwargs)
+        query = query.filter(is_published=True).order_by('-created_at')
+
+        return query
 
 
 class BlogPostDetailView(DetailView):
