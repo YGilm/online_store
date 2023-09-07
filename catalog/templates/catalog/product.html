@@ -1,24 +1,27 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="row text-center">
-            {% for object in object_list %}
-            <div class="col-4">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">{{ object.product_name | capfirst }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">{{ object.purchase_price | floatformat:2 }} руб.</h1>
-                        <ul class="list-unstyled mt-3 mb-4 text-center m-3" style="height: 100px;">
-                            <li>- {{ object.description|slice:":100" }}</li>
-                        </ul>
-                        <a href="{% url 'catalog:product_detail' object.id %}" class="btn btn-lg btn-block btn-outline-primary">Подробнее</a>
-                    </div>
+<div class="container">
+    <div class="row text-center">
+        {% for object in object_list %}
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ object.product_name | capfirst }}</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ object.purchase_price | floatformat:2 }} AED</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-center m-3" style="height: 100px;">
+                        <li>- {{ object.description|slice:":100" }}</li>
+                    </ul>
+                    <a href="{% url 'catalog:product_detail' object.id %}"
+                       class="btn btn-lg btn-block btn-outline-primary">Подробнее</a>
                 </div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
+        <div class="col-12 mt-4">
+            <a href="{% url 'catalog:product_form' %}" class="btn btn-primary">Добавить новый товар</a>
         </div>
     </div>
-{% endblock %}
+    {% endblock %}
