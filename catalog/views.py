@@ -5,6 +5,9 @@ from .models import Category, Product, BlogPost
 
 
 class HomeListView(ListView):
+    """
+    Отображение главной страницы с тремя топовыми продуктами по категориям.
+    """
     template_name = 'catalog/home.html'
     context_object_name = 'object_list'
 
@@ -26,6 +29,9 @@ class HomeListView(ListView):
 
 
 class ProductListView(ListView):
+    """
+    Отображение списка всех продуктов.
+    """
     model = Product
     template_name = 'catalog/product.html'
     context_object_name = 'object_list'
@@ -36,7 +42,16 @@ class ProductListView(ListView):
         return context
 
 
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('product_name', 'description', 'category', 'purchase_price', 'product_image')
+    success_url = reverse_lazy('catalog:product_list')
+
+
 class ProductDetailView(DetailView):
+    """
+    Отображение детальной информации о продукте.
+    """
     model = Product
     template_name = 'catalog/product_detail.html'
     context_object_name = 'object'
@@ -48,6 +63,9 @@ class ProductDetailView(DetailView):
 
 
 def contacts(request):
+    """
+    Страница контактов с возможностью отправки запроса на обратную связь.
+    """
     if request.method == 'POST':
         name = request.POST.get('name')
         phone = request.POST.get('phone')
@@ -61,6 +79,9 @@ def contacts(request):
 
 
 class BlogPostListView(ListView):
+    """
+    Отображение списка опубликованных блогов, отсортированных по дате создания.
+    """
     model = BlogPost
     template_name = 'catalog/blogpost_list.html'
     context_object_name = 'blogs'
@@ -73,6 +94,9 @@ class BlogPostListView(ListView):
 
 
 class BlogPostDetailView(DetailView):
+    """
+    Отображение детальной информации о блоге и учет количества просмотров.
+    """
     model = BlogPost
     template_name = 'catalog/blogpost_detail.html'
     context_object_name = 'object'
@@ -92,6 +116,9 @@ class BlogPostDetailView(DetailView):
 
 
 class BlogPostCreateView(CreateView):
+    """
+    Создание нового блога с указанием основных полей.
+    """
     model = BlogPost
     fields = ('title', 'content', 'is_published', 'views_count', 'image')
     success_url = reverse_lazy('catalog:blogs')
@@ -105,6 +132,9 @@ class BlogPostCreateView(CreateView):
 
 
 class BlogPostUpdateView(UpdateView):
+    """
+    Обновление существующего блога.
+    """
     model = BlogPost
     fields = ('title', 'content', 'is_published', 'views_count', 'image')
     success_url = reverse_lazy('catalog:blogs')
@@ -114,5 +144,8 @@ class BlogPostUpdateView(UpdateView):
 
 
 class BlogPostDeleteView(DeleteView):
+    """
+    Удаление блога.
+    """
     model = BlogPost
     success_url = reverse_lazy('catalog:blogs')

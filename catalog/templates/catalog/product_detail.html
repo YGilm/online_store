@@ -5,38 +5,23 @@
     <div class="row">
         <div class="col-4">
             <h6>{{ object.category.category_name|title }}</h6>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">
             <h1>{{ object.product_name|title }}</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-1">
-        </div>
-        <div class="col-4">
             <div class="card-img-top">
-                <img src="{{ object.product_image|mediapath }}" alt="Фото" width="125%" height="90%">
+                <img src="{{ object.product_image|mediapath }}" alt="Фото" width="100%" height="auto">
             </div>
-        </div>
-        <div class="col-2">
         </div>
         <div class="col-5">
             <div class="card" style="width: 18rem;">
                 <h2 class="card-title text-center mt-4 pricing-card-title">
-                    Цена: {{ object.purchase_price }} руб.
+                    Цена: {{ object.purchase_price }} AED
                 </h2>
                 <hr>
                 <div class="card-body">
                     <p class="card-text">{{ object.description|truncatechars:100 }}</p>
-
                     <button type="button" class="w-100 btn btn-lg btn-success">Купить</button>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
 {% endblock %}
