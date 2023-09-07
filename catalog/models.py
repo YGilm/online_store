@@ -5,6 +5,9 @@ NULLABLE = {'null': True, 'blank': True}
 
 
 class Category(models.Model):
+    """
+    Модель для хранения информации о категориях продуктов.
+    """
     category_name = models.CharField(max_length=50, verbose_name='наименование')
     description = models.CharField(max_length=100, verbose_name='описание')
 
@@ -18,6 +21,10 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    """
+    Модель для хранения информации о продуктах.
+    Содержит информацию о наименовании, описании, цене и категории продукта.
+    """
     product_name = models.CharField(max_length=50, verbose_name='наименование')
     description = models.CharField(max_length=100, verbose_name='описание')
     product_image = models.ImageField(upload_to='products/', verbose_name='изображение', **NULLABLE)
@@ -36,6 +43,10 @@ class Product(models.Model):
 
 
 class BlogPost(models.Model):
+    """
+    Модель для хранения блогов.
+    Содержит заголовок, содержание, изображение и информацию о публикации.
+    """
     title = models.CharField(max_length=150, verbose_name='заголовок')
     slug = AutoSlugField(populate_from='title', unique=True, verbose_name='slug')
     content = models.TextField(verbose_name='содержание')
