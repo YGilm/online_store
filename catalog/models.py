@@ -62,3 +62,21 @@ class BlogPost(models.Model):
         verbose_name = 'блог'
         verbose_name_plural = 'блоги'
         ordering = ('created_at',)
+
+
+class Version(models.Model):
+    """
+    Модель для хранения информации о версии продукта.
+    Содержит информацию о номере, названии, и признаке текущей версии.
+    """
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='наименование продукта')
+    version_number = models.CharField(max_length=20, verbose_name='номер версии')
+    version_name = models.CharField(max_length=150, verbose_name='название версии')
+    is_current = models.BooleanField(default=False, verbose_name='активная', **NULLABLE)
+
+    def __str__(self):
+        return f'{self.product}, {self.version_number} {self.version_name}'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
