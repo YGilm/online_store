@@ -10,7 +10,7 @@
                 <img src="{{ object.product_image|mediapath }}" alt="Фото" width="100%" height="auto">
             </div>
         </div>
-        <div class="col-5">
+        <div class="col-4">
             <div class="card" style="width: 18rem;">
                 <h2 class="card-title text-center mt-4 pricing-card-title">
                     Цена: {{ object.purchase_price }} AED
@@ -22,6 +22,29 @@
                 </div>
             </div>
         </div>
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <a href="{% url 'catalog:product_update' object.pk %}" class="w-100 btn btn-lg btn-primary">Редактировать</a>
+                </div>
+                <div class="card-body">
+                    <a class="w-100 btn btn-lg btn-danger"
+                       href="{% url 'catalog:product_delete' object.pk %}">Удалить</a>
+                </div>
+            </div>
+        </div>
     </div>
+    {% if object.version_set.all %}
+    <div class="row mt-4">
+        <div class="col">
+            <h3>Версия издательства:</h3>
+            <ul>
+                {% for version in object.version_set.all %}
+                <li>{{ version.version_name }} ({{ version.version_number }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
