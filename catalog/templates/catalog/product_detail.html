@@ -34,17 +34,19 @@
             </div>
         </div>
     </div>
-    {% if object.version_set.all %}
+    {% if active_versions %}
     <div class="row mt-4">
         <div class="col">
             <h3>Версия издательства:</h3>
             <ul>
-                {% for version in object.version_set.all %}
-                <li>{{ version.version_name }} ({{ version.version_number }})</li>
+                {% for version in active_versions %}
+                <li>
+                    <h4>{{ version.version_name }} ({{ version.version_number }})</h4>
+                </li>
                 {% endfor %}
             </ul>
         </div>
     </div>
-    {% endif %}
 </div>
+{% endif %}
 {% endblock %}
