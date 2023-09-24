@@ -1,5 +1,14 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
+<style>
+    .form-group {
+        background-color: #f9f9f9;
+        transition: background-color 0.3s ease;
+    }
+    .form-group:hover {
+        background-color: #e6e6e6;
+    }
+</style>
 <div class="col">
     <div class="row">
         <div class="col-6">
@@ -8,7 +17,6 @@
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
 
-                        <!-- Итерация по полям формы -->
                         {% for field in form %}
                         <div class="form-group">
                             {{ field.label_tag }}
@@ -16,19 +24,18 @@
                         </div>
                         {% endfor %}
 
-                        <hr> <!-- Добавляем разделитель -->
+                        <hr>
 
-                        <!-- Итерация по полям formset -->
+                        {{ formset.management_form }}
                         {% for form in formset %}
-                            {% for field in form %}
-                            <div class="form-group">
-                                {{ field.label_tag }}
-                                {{ field }}
-                            </div>
-                            {% endfor %}
+                        {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                        </div>
                         {% endfor %}
-
-                        <button type="submit" class="btn btn-success">Добавить</button>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-success mt-3 w-100">Сохранить изменения</button>
                     </form>
                 </div>
             </div>

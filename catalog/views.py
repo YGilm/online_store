@@ -87,6 +87,7 @@ class ProductDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.product_name
+        context['active_versions'] = self.object.version_set.filter(is_current=True)
         return context
 
 
