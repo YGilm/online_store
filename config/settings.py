@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'catalog',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,19 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/users:login/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True  # Использование TLS
+EMAIL_USE_SSL = False  # Использование SSL
+EMAIL_HOST_USER = 'raid_hp_auto@mail.ru'
+EMAIL_HOST_PASSWORD = 'Hf3PiXuuBLZQT8RyXkYA'
+DEFAULT_FROM_EMAIL = 'verify-bot@mail.ru'  # Адрес электронной почты, который будет виден в поле "От"
+
+
