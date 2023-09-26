@@ -6,3 +6,4 @@ __pycache__/
 *.css
 *.js
 *.map
+.env
