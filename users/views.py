@@ -45,7 +45,6 @@ class VerifyEmailView(View):
 
 
 class UpdatePassword(View):
-
     model = User
     template_name = 'users/update_password.html'
     success_url = reverse_lazy('users:login')
