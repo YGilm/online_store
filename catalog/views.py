@@ -1,4 +1,5 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -45,9 +46,10 @@ class ProductListView(LoginRequiredMixin, ListView):
         return context
 
 
-class ProductCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'catalog.add_product'
     success_url = reverse_lazy('catalog:product_list')
 
     def form_valid(self, form):
@@ -55,9 +57,10 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'catalog.change_product'
     success_url = reverse_lazy('catalog:product_list')
 
     def get_context_data(self, **kwargs):
@@ -96,14 +99,18 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """
     Удаление продукта.
     """
     model = Product
     success_url = reverse_lazy('catalog:product_list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
+
+@login_required
 def contacts(request):
     """
     Страница контактов с возможностью отправки запроса на обратную связь.
@@ -135,7 +142,7 @@ class BlogPostListView(ListView):
         return query
 
 
-class BlogPostDetailView(DetailView):
+class BlogPostDetailView(LoginRequiredMixin, DetailView):
     """
     Отображение детальной информации о блоге и учет количества просмотров.
     """
@@ -157,11 +164,12 @@ class BlogPostDetailView(DetailView):
         return context
 
 
-class BlogPostCreateView(CreateView):
+class BlogPostCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """
     Создание нового блога с указанием основных полей.
     """
     model = BlogPost
+    permission_required = 'catalog.add_blog'
     fields = ('title', 'content', 'is_published', 'views_count', 'image')
     success_url = reverse_lazy('catalog:blogs')
 
@@ -173,11 +181,12 @@ class BlogPostCreateView(CreateView):
         return response
 
 
-class BlogPostUpdateView(UpdateView):
+class BlogPostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """
     Обновление существующего блога.
     """
     model = BlogPost
+    permission_required = 'catalog.change_blog'
     fields = ('title', 'content', 'is_published', 'views_count', 'image')
     success_url = reverse_lazy('catalog:blogs')
 
@@ -185,9 +194,12 @@ class BlogPostUpdateView(UpdateView):
         return reverse('catalog:blogpost_detail', kwargs={'pk': self.object.pk})
 
 
-class BlogPostDeleteView(DeleteView):
+class BlogPostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """
     Удаление блога.
     """
     model = BlogPost
     success_url = reverse_lazy('catalog:blogs')
+
+    def test_func(self):
+        return self.request.user.is_superuser
