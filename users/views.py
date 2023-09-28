@@ -1,6 +1,7 @@
 import string
 import random
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
@@ -44,8 +45,7 @@ class VerifyEmailView(View):
         return redirect('users:login')
 
 
-class UpdatePassword(View):
-
+class UpdatePassword(LoginRequiredMixin, View):
     model = User
     template_name = 'users/update_password.html'
     success_url = reverse_lazy('users:login')
@@ -74,7 +74,7 @@ class UpdatePassword(View):
         return redirect('users:login')
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')

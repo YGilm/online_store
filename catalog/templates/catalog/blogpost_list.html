@@ -3,9 +3,11 @@
 {% block content %}
 <header class="text-center"><h2>Мы пишем:</h2></header>
 <div class="row">
+    {% if perms.catalog.add_blog %}
     <div class="col-12 text-center">
         <a href="{% url 'catalog:blogpost_form' %}" class="btn btn-lg btn-primary w-25 mt-4">Создать блог</a>
     </div>
+    {% endif %}
     {% for object in object_list %}
     <div class="col-6 pt-3">
         <div class="card h-100">

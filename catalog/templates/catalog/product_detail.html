@@ -22,16 +22,20 @@
                 </div>
             </div>
         </div>
+        {% if perms.catalog.change_product %}
         <div class="col-4">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <a href="{% url 'catalog:product_update' object.pk %}" class="w-100 btn btn-lg btn-primary">Редактировать</a>
                 </div>
+                {% endif %}
+                {% if user.is_superuser %}
                 <div class="card-body">
                     <a class="w-100 btn btn-lg btn-danger"
                        href="{% url 'catalog:product_delete' object.pk %}">Удалить</a>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
     {% if active_versions %}
