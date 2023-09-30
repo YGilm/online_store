@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView, UpdateView
+from django.contrib import messages
 
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
@@ -45,7 +46,7 @@ class VerifyEmailView(View):
         return redirect('users:login')
 
 
-class UpdatePassword(LoginRequiredMixin, View):
+class UpdatePassword(View):
     model = User
     template_name = 'users/update_password.html'
     success_url = reverse_lazy('users:login')
@@ -54,24 +55,32 @@ class UpdatePassword(LoginRequiredMixin, View):
         return render(request, self.template_name)
 
     def post(self, request):
+
         email = request.POST.get('user_email')
-        user = User.objects.get(email=email)
+        try:
+            user = User.objects.get(email=email)
 
-        letters_and_digits = string.ascii_letters + string.digits
-        length = 8
-        new_password = ''.join(random.choice(letters_and_digits) for i in range(length))
+            letters_and_digits = string.ascii_letters + string.digits
+            length = 8
+            new_password = ''.join(random.choice(letters_and_digits) for i in range(length))
 
-        send_mail(
-            'Email changed password',
-            f'ваш новый пароль: {new_password}',
-            'raid_hp_auto@mail.ru',
-            [user.email],
-            fail_silently=False,
-        )
-        user.set_password(new_password)
-        user.save()
+            send_mail(
+                'Email changed password',
+                f'ваш новый пароль: {new_password}',
+                'raid_hp_auto@mail.ru',
+                [user.email],
+                fail_silently=False,
+            )
+            user.set_password(new_password)
+            user.save()
 
-        return redirect('users:login')
+            messages.success(request, "Новый пароль отправлен на указанный email.")
+            return redirect('users:login')
+        except User.DoesNotExist:
+            messages.error(request, "Пользователь с таким email не найден.")
+        except Exception as e:
+            messages.error(request, f"Произошла ошибка: {e}")
+        return render(request, self.template_name)
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
