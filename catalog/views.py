@@ -48,7 +48,6 @@ class ProductListView(LoginRequiredMixin, ListView):
         return context
 
 
-@never_cache
 class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
@@ -60,7 +59,6 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         return super().form_valid(form)
 
 
-@never_cache
 class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
@@ -168,7 +166,6 @@ class BlogPostDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-@never_cache
 class BlogPostCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """
     Создание нового блога с указанием основных полей.
@@ -186,7 +183,6 @@ class BlogPostCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView
         return response
 
 
-@never_cache
 class BlogPostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """
     Обновление существующего блога.
