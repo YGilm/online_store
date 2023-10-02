@@ -3,9 +3,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
+from django.views.decorators.cache import never_cache
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Category, Product, BlogPost, Version
+from .models import Product, BlogPost, Version
 from .forms import ProductForm, VersionForm
+from .services import get_cached_categories
 
 
 class HomeListView(ListView):
@@ -16,7 +18,7 @@ class HomeListView(ListView):
     context_object_name = 'object_list'
 
     def get_queryset(self):
-        categories = Category.objects.all()
+        categories = get_cached_categories()
         top_products = []
 
         for category in categories:
@@ -46,6 +48,7 @@ class ProductListView(LoginRequiredMixin, ListView):
         return context
 
 
+@never_cache
 class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
@@ -57,6 +60,7 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         return super().form_valid(form)
 
 
+@never_cache
 class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
@@ -164,6 +168,7 @@ class BlogPostDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
+@never_cache
 class BlogPostCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """
     Создание нового блога с указанием основных полей.
@@ -181,6 +186,7 @@ class BlogPostCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView
         return response
 
 
+@never_cache
 class BlogPostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """
     Обновление существующего блога.
