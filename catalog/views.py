@@ -4,8 +4,9 @@ from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Category, Product, BlogPost, Version
+from .models import Product, BlogPost, Version
 from .forms import ProductForm, VersionForm
+from .services import get_cached_categories
 
 
 class HomeListView(ListView):
@@ -16,7 +17,7 @@ class HomeListView(ListView):
     context_object_name = 'object_list'
 
     def get_queryset(self):
-        categories = Category.objects.all()
+        categories = get_cached_categories()
         top_products = []
 
         for category in categories:
